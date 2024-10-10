@@ -37,7 +37,7 @@ const UserUpdate = () => {
   };
 
   return (
-    <div className="max-w-lg mx-auto p-4">
+    <div className=" mx-auto p-4">
       <Breadcrumb pageName="User" />
       <h1 className="text-2xl font-bold mb-4">Update User Descriptions</h1>
       <form
