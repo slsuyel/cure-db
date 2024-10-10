@@ -11,7 +11,7 @@ const adminAuthApi = baseApi.injectEndpoints({
     }),
     adminLogin: builder.mutation({
       query: ({ data }) => ({
-        url: '/admin/login',
+        url: '/api/admin/login',
         method: 'POST',
         body: data,
       }),
@@ -26,7 +26,7 @@ const adminAuthApi = baseApi.injectEndpoints({
     }),
     tokenCheck: builder.mutation({
       query: ({ token }) => ({
-        url: '/admin/check-token',
+        url: '/api/admin/check-token',
         method: 'POST',
         headers: {
           authorization: `Bearer ${token}`,

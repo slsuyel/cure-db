@@ -23,11 +23,8 @@ const userApi = baseApi.injectEndpoints({
     }),
 
     activeUsers: builder.query({
-      query: ({ token }) => ({
-        url: '/admin/users',
-        headers: {
-          authorization: `Bearer ${token}`,
-        },
+      query: () => ({
+        url: '/api/users',
       }),
     }),
 
@@ -64,8 +61,8 @@ const userApi = baseApi.injectEndpoints({
     }),
 
     profileUpdate: builder.mutation({
-      query: ({ data, token }) => ({
-        url: '/users/update/profile',
+      query: ({ data, token, id }) => ({
+        url: `/api/users/${id}/descriptions`,
         method: 'PUT',
         body: data,
         headers: {
