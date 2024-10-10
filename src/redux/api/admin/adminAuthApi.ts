@@ -16,6 +16,17 @@ const adminAuthApi = baseApi.injectEndpoints({
         body: data,
       }),
     }),
+    addBlog: builder.mutation({
+      query: ({ data, token }) => ({
+        url: '/api/blogs',
+        method: 'POST',
+        body: data,
+        headers: {
+          authorization: `Bearer ${token}`,
+        },
+      }),
+    }),
+
     adminProfile: builder.query({
       query: ({ token }) => ({
         url: '/admin/my/profile',
@@ -33,6 +44,7 @@ const adminAuthApi = baseApi.injectEndpoints({
         },
       }),
     }),
+
     logOut: builder.mutation({
       query: ({ token }) => ({
         url: '/admin/logout',
@@ -48,4 +60,5 @@ export const {
   useAdminLoginMutation,
   useTokenCheckMutation,
   useLogOutMutation,
+  useAddBlogMutation,
 } = adminAuthApi;

@@ -8,7 +8,7 @@ import AllUsers from '../pages/Users/AllUsers';
 // import Reports from '../pages/Reports/Reports';
 // import Settings from '../pages/Settings/Settings';
 import UserUpdate from '../pages/Users/UserUpdate';
-// import PaymentLogs from '../pages/PaymentLogs/PaymentLogs';
+import PaymentLogs from '../pages/PaymentLogs/PaymentLogs';
 
 export const adminPaths = [
   {
@@ -52,11 +52,11 @@ export const adminPaths = [
     ],
   },
 
-  // {
-  //   name: 'Payment Logs',
-  //   path: 'payment-log',
-  //   element: <PaymentLogs />,
-  // },
+  {
+    name: 'BLogs',
+    path: 'blogs',
+    element: <PaymentLogs />,
+  },
 
   // {
   //   name: 'Packages',
@@ -75,6 +75,7 @@ export const adminPaths = [
   //     },
   //   ],
   // },
+
   // {
   //   name: 'Admin Profile',
   //   path: 'profile',
