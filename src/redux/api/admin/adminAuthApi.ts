@@ -26,6 +26,16 @@ const adminAuthApi = baseApi.injectEndpoints({
         },
       }),
     }),
+    allBlogs: builder.query({
+      query: ({ data, token }) => ({
+        url: '/api/blogs',
+        method: 'GET',
+        body: data,
+        headers: {
+          authorization: `Bearer ${token}`,
+        },
+      }),
+    }),
 
     adminProfile: builder.query({
       query: ({ token }) => ({
@@ -61,4 +71,5 @@ export const {
   useTokenCheckMutation,
   useLogOutMutation,
   useAddBlogMutation,
+  useAllBlogsQuery
 } = adminAuthApi;

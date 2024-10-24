@@ -6,9 +6,10 @@ import AllUsers from '../pages/Users/AllUsers';
 // import CreateUser from '../pages/Users/CreateUser';
 // import UserDetails from '../pages/Users/UserDetails';
 // import Reports from '../pages/Reports/Reports';
-// import Settings from '../pages/Settings/Settings';
+import Settings from '../pages/Settings/Settings';
 import UserUpdate from '../pages/Users/UserUpdate';
 import PaymentLogs from '../pages/PaymentLogs/PaymentLogs';
+import AllBlogs from '../pages/PaymentLogs/AllBlogs';
 
 export const adminPaths = [
   {
@@ -52,29 +53,29 @@ export const adminPaths = [
     ],
   },
 
+  // {
+  //   name: 'BLogs',
+  //   path: 'blogs',
+  //   element: <PaymentLogs />,
+  // },
+
   {
     name: 'BLogs',
     path: 'blogs',
-    element: <PaymentLogs />,
+    children: [
+      {
+        name: 'All Blogs',
+        path: 'all-blogs',
+        element: <AllBlogs />,
+      },
+      {
+        name: 'Add Blog',
+        path: 'add-blog',
+        element: <PaymentLogs />,
+      },
+    
+    ],
   },
-
-  // {
-  //   name: 'Packages',
-  //   path: 'packages',
-  //   children: [
-  //     {
-  //       name: 'All Packages',
-  //       path: 'all-packages',
-  //       element: <AllPackages />,
-  //     },
-  //     {
-  //       name: 'Create Package',
-  //       path: 'package/:id',
-  //       element: <SinglePackage />,
-  //       sidebar: false,
-  //     },
-  //   ],
-  // },
 
   // {
   //   name: 'Admin Profile',
@@ -82,9 +83,9 @@ export const adminPaths = [
   //   element: <AdminProfile />,
   //   sidebar: false,
   // },
-  // {
-  //   name: 'Settings',
-  //   path: 'settings',
-  //   element: <Settings />,
-  // },
+  {
+    name: 'Settings',
+    path: 'settings',
+    element: <Settings />,
+  },
 ];
