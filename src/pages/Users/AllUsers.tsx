@@ -33,7 +33,7 @@ const AllUsers = () => {
 
   return (
     <div className="rounded-sm border border-stroke bg-white p-6 shadow-default dark:border-strokedark dark:bg-boxdark">
-      <h2 className="text-lg font-semibold mb-4">User List</h2>
+      <h2 className="text-lg font-semibold mb-4">Users List</h2>
 
       <div className="max-w-full overflow-x-auto">
         <table className="w-full table-auto">
