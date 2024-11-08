@@ -75,7 +75,7 @@ const AllUsers = () => {
                 <td className="border-b border-[#eee] py-5 px-4 dark:border-strokedark">
                   <div className="flex items-center space-x-3.5">
                     <Link
-                      to={`/dashboard/user-update/${user.id}`}
+                      to={`/dashboard/update-patient/${user.id}`}
                       className="hover:text-primary dark:text-blue-400 text-blue-500"
                     >
                       <PencilEdit02Icon size={24} />

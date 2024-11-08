@@ -26,28 +26,17 @@ export const adminPaths = [
   // },
 
   {
-    name: 'User',
+    name: 'Patients',
     path: 'users',
     children: [
       {
-        name: 'All Users',
-        path: 'all-users',
+        name: 'All Patients',
+        path: 'all-patients',
         element: <AllUsers />,
       },
-      // {
-      //   name: 'Create User',
-      //   path: 'create-user',
-      //   element: <CreateUser />,
-      // },
-      // {
-      //   name: 'User Details',
-      //   path: 'user/:id',
-      //   element: <UserDetails />,
-      //   sidebar: false,
-      // },
       {
-        name: 'user-update',
-        path: 'user-update/:id',
+        name: 'Update Patient',
+        path: 'update-patient/:id',
         element: <UserUpdate />,
         sidebar: false,
       },
