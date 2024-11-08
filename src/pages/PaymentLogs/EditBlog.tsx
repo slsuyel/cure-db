@@ -1,9 +1,13 @@
 import { useNavigate, useParams } from 'react-router-dom';
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import ReactQuill from 'react-quill';
 import 'react-quill/dist/quill.snow.css';
-import { useEditBlogMutation } from '../../redux/api/admin/adminAuthApi';
+import {
+  useEditBlogMutation,
+  useSingleBlogQuery,
+} from '../../redux/api/admin/adminAuthApi';
 import { toast } from 'sonner';
+import Loader from '../../components/Loader';
 
 const EditBlog = () => {
   const { id } = useParams();
@@ -12,7 +16,19 @@ const EditBlog = () => {
   const [content, setContent] = useState('');
   const [category, setCategory] = useState('');
   const [editBlog, { isLoading }] = useEditBlogMutation();
+  const { data, isLoading: loading } = useSingleBlogQuery({ id, token });
   const navigate = useNavigate();
+
+  // Set the form fields when data is loaded
+  useEffect(() => {
+    if (data) {
+      setTitle(data.title || ''); // Set the current title
+      setContent(data.content || ''); // Set the current content
+      setCategory(data.category || ''); // Set the current category
+    }
+  }, [data]);
+
+  // Handle form submission
   const handleSubmit = async (e: { preventDefault: () => void }) => {
     e.preventDefault();
     const data = {
@@ -22,9 +38,10 @@ const EditBlog = () => {
     };
     await editBlog({ data, token, id });
     navigate('/dashboard/all-blogs');
-
     toast.success('Blog updated successfully');
   };
+
+  if (loading) return <Loader />;
 
   return (
     <div className="max-w-3xl mx-auto p-6 bg-white shadow-md rounded-lg">
@@ -48,6 +65,7 @@ const EditBlog = () => {
           />
         </div>
 
+        {/* Category Input */}
         <div className="mb-4">
           <label
             htmlFor="category"
