@@ -38,8 +38,7 @@ const UserUpdate = () => {
 
   return (
     <div className=" mx-auto p-4">
-      <Breadcrumb pageName="User" />
-      <h1 className="text-2xl font-bold mb-4">Update User Descriptions</h1>
+      <h1 className="text-2xl font-bold mb-4">Update Patient Descriptions</h1>
       <form
         onSubmit={handleSubmit}
         className="bg-white shadow-md rounded px-8 pt-6 pb-8 mb-4"

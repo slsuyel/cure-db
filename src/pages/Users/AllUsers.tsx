@@ -2,6 +2,8 @@ import { useState } from 'react';
 import {
   BookmarkRemove01Icon,
   Delete02Icon,
+  EditUser02Icon,
+  InformationCircleIcon,
   PencilEdit02Icon,
   ViewIcon,
 } from 'hugeicons-react';
@@ -33,7 +35,7 @@ const AllUsers = () => {
 
   return (
     <div className="rounded-sm border border-stroke bg-white p-6 shadow-default dark:border-strokedark dark:bg-boxdark">
-      <h2 className="text-lg font-semibold mb-4">Users List</h2>
+      <h2 className="text-lg font-semibold mb-4">Patients List</h2>
 
       <div className="max-w-full overflow-x-auto">
         <table className="w-full table-auto">
@@ -47,6 +49,9 @@ const AllUsers = () => {
               </th>
               <th className="py-4 px-4 font-medium text-black dark:text-white">
                 Email
+              </th>
+              <th className="py-4 px-4 font-medium text-black dark:text-white">
+                Edit Descriptions
               </th>
               <th className="py-4 px-4 font-medium text-black dark:text-white">
                 Action
@@ -79,6 +84,16 @@ const AllUsers = () => {
                       className="hover:text-primary dark:text-blue-400 text-blue-500"
                     >
                       <PencilEdit02Icon size={24} />
+                    </Link>
+                  </div>
+                </td>
+                <td className="border-b border-[#eee] py-5 px-4 dark:border-strokedark">
+                  <div className="flex items-center space-x-3.5">
+                    <Link
+                      to={`/dashboard/update-user/${user.id}`}
+                      className="hover:text-primary dark:text-blue-400 text-blue-500"
+                    >
+                      <EditUser02Icon size={24} />
                     </Link>
                   </div>
                 </td>

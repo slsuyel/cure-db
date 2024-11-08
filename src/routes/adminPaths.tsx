@@ -11,6 +11,7 @@ import UserUpdate from '../pages/Users/UserUpdate';
 import PaymentLogs from '../pages/PaymentLogs/PaymentLogs';
 import AllBlogs from '../pages/PaymentLogs/AllBlogs';
 import EditBlog from '../pages/PaymentLogs/EditBlog';
+import UpdateUser from '../pages/Users/UpdateUser';
 
 export const adminPaths = [
   {
@@ -38,6 +39,12 @@ export const adminPaths = [
         name: 'Update Patient',
         path: 'update-patient/:id',
         element: <UserUpdate />,
+        sidebar: false,
+      },
+      {
+        name: 'Update User',
+        path: 'update-user/:id',
+        element: <UpdateUser />,
         sidebar: false,
       },
     ],

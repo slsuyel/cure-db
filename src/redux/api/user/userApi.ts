@@ -70,11 +70,21 @@ const userApi = baseApi.injectEndpoints({
         },
       }),
     }),
+    profileInfoUpdate: builder.mutation({
+      query: ({ data, token, id }) => ({
+        url: `/api/users/${id}/update`,
+        method: 'POST',
+        body: data,
+        headers: {
+          authorization: `Bearer ${token}`,
+        },
+      }),
+    }),
   }),
 });
 export const {
   useActiveUsersQuery,
-
+  useProfileInfoUpdateMutation,
   usePhotoDeleteMutation,
   usePasswordChangeMutation,
   useUserRegistrationMutation,
