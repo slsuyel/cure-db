@@ -15,17 +15,31 @@ const UpdateUser = () => {
   });
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    setFormData({
-      ...formData,
-      [e.target.name]: e.target.value,
-    });
+    if (e.target.type === 'file') {
+      setFormData({
+        ...formData,
+        [e.target.name]: e.target.files?.[0] || null,
+      });
+    } else {
+      setFormData({
+        ...formData,
+        [e.target.name]: e.target.value,
+      });
+    }
   };
 
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     try {
+      const formDataToSend = new FormData();
+      formDataToSend.append('total_cost', formData.total_cost);
+      formDataToSend.append('annual_cost', formData.annual_cost);
+      if (formData.image) {
+        formDataToSend.append('image', formData.image);
+      }
+
       const res = await profileInfoUpdate({
-        data: formData,
+        data: formDataToSend,
         token,
         id,
       }).unwrap();
@@ -46,6 +60,7 @@ const UpdateUser = () => {
       <form
         onSubmit={handleSubmit}
         className="bg-white shadow-md rounded px-8 pt-6 pb-8 mb-4"
+        encType="multipart/form-data"
       >
         <div className="mb-4">
           <label
