@@ -10,6 +10,7 @@ import Settings from '../pages/Settings/Settings';
 import UserUpdate from '../pages/Users/UserUpdate';
 import PaymentLogs from '../pages/PaymentLogs/PaymentLogs';
 import AllBlogs from '../pages/PaymentLogs/AllBlogs';
+import EditBlog from '../pages/PaymentLogs/EditBlog';
 
 export const adminPaths = [
   {
@@ -73,7 +74,12 @@ export const adminPaths = [
         path: 'add-blog',
         element: <PaymentLogs />,
       },
-    
+      {
+        name: 'Edit Blog',
+        path: 'edit-blog/:id',
+        element: <EditBlog />,
+        sidebar: false,
+      },
     ],
   },
 

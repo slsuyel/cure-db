@@ -1,13 +1,21 @@
 import { useState } from 'react';
 import ReactQuill from 'react-quill';
 import 'react-quill/dist/quill.snow.css';
-import { useAddBlogMutation } from '../../redux/api/admin/adminAuthApi';
+import {
+  useEditBlogMutation,
+  useSingleBlogQuery,
+} from '../../redux/api/admin/adminAuthApi';
 import { ImageUploadIcon } from 'hugeicons-react';
 import { toast } from 'sonner';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, useParams } from 'react-router-dom';
 
-const PaymentLogs = () => {
+const EditBlog = () => {
+  const { id } = useParams();
+
   const token = localStorage.getItem('token');
+
+  const [editBlog, { isLoading }] = useEditBlogMutation();
+  const { data: singleBlog } = useSingleBlogQuery({ id, token });
 
   const [formData, setFormData] = useState({
     title: '',
@@ -15,8 +23,6 @@ const PaymentLogs = () => {
     category: '',
     thumbnail: null,
   });
-
-  const [addBlog, { isLoading }] = useAddBlogMutation();
 
   const handleChange = (e: { target: { name: any; value: any } }) => {
     const { name, value } = e.target;
@@ -43,15 +49,26 @@ const PaymentLogs = () => {
         formDataToSend.append('thumbnail', formData.thumbnail);
       }
 
-      await addBlog({ data: formDataToSend, token }).unwrap();
+      await editBlog({ data: formDataToSend, token, id }).unwrap();
       setFormData({ title: '', content: '', category: '', thumbnail: null });
       navigate('/dashboard/all-blogs');
-      toast.success('Blog saved successfully!');
+      toast.success('Blog updated successfully!');
     } catch (error) {
-      console.error('Failed to save the blog:', error);
-      toast.error('Failed to save the blog. Please try again.');
+      console.error('Failed to update the blog:', error);
+      toast.error('Failed to update the blog. Please try again.');
     }
   };
+
+  console.log(singleBlog);
+
+  //   {
+  //     "id": 5,
+  //     "image": null,
+  //     "title": "সিঙ্গাপুরে চিছুটা নাড়াচ্ছে",
+  //     "content": "<p>সিঙ্গাপুরে চিকিৎসাধীন মাথায় গুলিবিদ্ধ শিশু মুসা তাকাচ্ছে, হাত-পা কিছুটা নাড়াচ্ছে</p><p>সিঙ্গাপুরে চিকিৎসাধীন মাথায় গুলিবিদ্ধ শিশু মুসা তাকাচ্ছে, হাত-পা কি",
+  //     "category": "Category",
+
+  // }
 
   return (
     <div className="container mx-auto p-4">
@@ -150,4 +167,4 @@ const PaymentLogs = () => {
   );
 };
 
-export default PaymentLogs;
+export default EditBlog;

@@ -25,7 +25,20 @@ const adminAuthApi = baseApi.injectEndpoints({
           authorization: `Bearer ${token}`,
         },
       }),
+      invalidatesTags: ['blogs'],
     }),
+    editBlog: builder.mutation({
+      query: ({ data, token, id }) => ({
+        url: `/api/blogs/${id}`,
+        method: 'PUT',
+        body: data,
+        headers: {
+          authorization: `Bearer ${token}`,
+        },
+      }),
+      invalidatesTags: ['blogs'],
+    }),
+
     allBlogs: builder.query({
       query: ({ data, token }) => ({
         url: '/api/blogs',
@@ -35,6 +48,17 @@ const adminAuthApi = baseApi.injectEndpoints({
           authorization: `Bearer ${token}`,
         },
       }),
+      providesTags: ['blogs'],
+    }),
+    singleBlog: builder.query({
+      query: ({ id, token }) => ({
+        url: `/api/blogs/${id}`,
+        method: 'GET',
+        headers: {
+          authorization: `Bearer ${token}`,
+        },
+      }),
+      providesTags: ['blogs'],
     }),
 
     adminProfile: builder.query({
@@ -55,6 +79,17 @@ const adminAuthApi = baseApi.injectEndpoints({
       }),
     }),
 
+    deleteBlog: builder.mutation({
+      query: ({ id, token }) => ({
+        url: `/api/blogs/${id}`,
+        method: 'DELETE',
+        headers: {
+          authorization: `Bearer ${token}`,
+        },
+      }),
+      invalidatesTags: ['blogs'],
+    }),
+
     logOut: builder.mutation({
       query: ({ token }) => ({
         url: '/admin/logout',
@@ -68,8 +103,11 @@ const adminAuthApi = baseApi.injectEndpoints({
 });
 export const {
   useAdminLoginMutation,
+  useSingleBlogQuery,
+  useEditBlogMutation,
+  useDeleteBlogMutation,
   useTokenCheckMutation,
   useLogOutMutation,
   useAddBlogMutation,
-  useAllBlogsQuery
+  useAllBlogsQuery,
 } = adminAuthApi;
