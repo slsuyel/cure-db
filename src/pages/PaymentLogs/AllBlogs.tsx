@@ -40,6 +40,7 @@ const AllBlogs = () => {
           <tr className="bg-gray-100">
             <th className="py-2 px-4 text-left">Title</th>
             <th className="py-2 px-4 text-left">Category</th>
+            <th className="py-2 px-4 text-left">Thumbnail</th>
             <th className="py-2 px-4 text-left">Created At</th>
             <th className="py-2 px-4 text-left">Actions</th>
           </tr>
@@ -49,6 +50,13 @@ const AllBlogs = () => {
             <tr key={blog.id} className="border-t border-gray-300">
               <td className="py-2 px-4">{blog.title}</td>
               <td className="py-2 px-4">{blog.category}</td>
+              <td className="py-2 px-4">
+                <img
+                  src={blog.image_url}
+                  alt="thumbnail"
+                  className="w-10 h-10 rounded-md"
+                />
+              </td>
               <td className="py-2 px-4">
                 {new Date(blog.created_at).toLocaleDateString()}
               </td>

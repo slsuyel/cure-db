@@ -1,165 +1,93 @@
+import { useNavigate, useParams } from 'react-router-dom';
 import { useState } from 'react';
 import ReactQuill from 'react-quill';
 import 'react-quill/dist/quill.snow.css';
-import {
-  useEditBlogMutation,
-  useSingleBlogQuery,
-} from '../../redux/api/admin/adminAuthApi';
-import { ImageUploadIcon } from 'hugeicons-react';
+import { useEditBlogMutation } from '../../redux/api/admin/adminAuthApi';
 import { toast } from 'sonner';
-import { useNavigate, useParams } from 'react-router-dom';
 
 const EditBlog = () => {
   const { id } = useParams();
-
   const token = localStorage.getItem('token');
-
+  const [title, setTitle] = useState('');
+  const [content, setContent] = useState('');
+  const [category, setCategory] = useState('');
   const [editBlog, { isLoading }] = useEditBlogMutation();
-  const { data: singleBlog } = useSingleBlogQuery({ id, token });
-
-  const [formData, setFormData] = useState({
-    title: '',
-    content: '',
-    category: '',
-    thumbnail: null,
-  });
-
-  const handleChange = (e: { target: { name: any; value: any } }) => {
-    const { name, value } = e.target;
-    setFormData({ ...formData, [name]: value });
-  };
-
-  const handleContentChange = (value: any) => {
-    setFormData({ ...formData, content: value });
-  };
-
-  const handleFileChange = (e: any) => {
-    const file = e.target.files[0];
-    setFormData({ ...formData, thumbnail: file });
-  };
   const navigate = useNavigate();
   const handleSubmit = async (e: { preventDefault: () => void }) => {
     e.preventDefault();
-    try {
-      const formDataToSend = new FormData();
-      formDataToSend.append('title', formData.title);
-      formDataToSend.append('content', formData.content);
-      formDataToSend.append('category', formData.category);
-      if (formData.thumbnail) {
-        formDataToSend.append('thumbnail', formData.thumbnail);
-      }
+    const data = {
+      title,
+      content,
+      category,
+    };
+    await editBlog({ data, token, id });
+    navigate('/dashboard/all-blogs');
 
-      await editBlog({ data: formDataToSend, token, id }).unwrap();
-      setFormData({ title: '', content: '', category: '', thumbnail: null });
-      navigate('/dashboard/all-blogs');
-      toast.success('Blog updated successfully!');
-    } catch (error) {
-      console.error('Failed to update the blog:', error);
-      toast.error('Failed to update the blog. Please try again.');
-    }
+    toast.success('Blog updated successfully');
   };
 
-  console.log(singleBlog);
-
-  //   {
-  //     "id": 5,
-  //     "image": null,
-  //     "title": "সিঙ্গাপুরে চিছুটা নাড়াচ্ছে",
-  //     "content": "<p>সিঙ্গাপুরে চিকিৎসাধীন মাথায় গুলিবিদ্ধ শিশু মুসা তাকাচ্ছে, হাত-পা কিছুটা নাড়াচ্ছে</p><p>সিঙ্গাপুরে চিকিৎসাধীন মাথায় গুলিবিদ্ধ শিশু মুসা তাকাচ্ছে, হাত-পা কি",
-  //     "category": "Category",
-
-  // }
-
   return (
-    <div className="container mx-auto p-4">
-      <h1 className="text-2xl font-bold mb-4">Add New Blog</h1>
-      <form
-        onSubmit={handleSubmit}
-        encType="multipart/form-data"
-        className="bg-white dark:bg-boxdark shadow-md rounded px-8 pt-6 pb-8 mb-4"
-      >
+    <div className="max-w-3xl mx-auto p-6 bg-white shadow-md rounded-lg">
+      <h1 className="text-2xl font-bold text-center mb-4">Edit Blog</h1>
+      <form onSubmit={handleSubmit}>
+        {/* Title Input */}
         <div className="mb-4">
           <label
-            className="block text-gray-700 text-sm font-bold mb-2"
             htmlFor="title"
+            className="block text-lg font-medium text-gray-700"
           >
             Title
           </label>
           <input
-            type="text"
-            name="title"
             id="title"
-            value={formData.title}
-            onChange={handleChange}
-            className="dark:bg-boxdark appearance-none border rounded w-full py-2 px-3"
-            required
+            type="text"
+            value={title}
+            onChange={(e) => setTitle(e.target.value)}
+            className="mt-1 block w-full p-2 border rounded-md"
+            placeholder="Enter blog title"
           />
         </div>
 
         <div className="mb-4">
           <label
-            className="block text-gray-700 text-sm font-bold mb-2"
             htmlFor="category"
+            className="block text-lg font-medium text-gray-700"
           >
             Category
           </label>
           <input
-            type="text"
-            name="category"
             id="category"
-            value={formData.category}
-            onChange={handleChange}
-            className="dark:bg-boxdark shadow appearance-none border rounded w-full py-2 px-3"
-            required
+            type="text"
+            value={category}
+            onChange={(e) => setCategory(e.target.value)}
+            className="mt-1 block w-full p-2 border rounded-md"
+            placeholder="Enter blog category"
           />
         </div>
 
-        <div
-          id="FileUpload"
-          className="w-100 relative mb-5.5 block  cursor-pointer appearance-none rounded border border-dashed border-primary bg-gray py-4 px-4 dark:bg-meta-4 sm:py-7.5"
-        >
-          <input
-            type="file"
-            accept="image/*"
-            className="absolute inset-0 z-50 m-0 h-full w-full cursor-pointer p-0 opacity-0 outline-none"
-            onChange={handleFileChange}
-          />
-          <div className="flex flex-col items-center justify-center space-y-3">
-            <span className="flex h-10 w-10 items-center justify-center rounded-full border border-stroke bg-white dark:border-strokedark dark:bg-boxdark">
-              <ImageUploadIcon size={24} />
-            </span>
-            <p>
-              <span className="text-primary">Click to upload</span>
-            </p>
-            <p className="mt-1.5">SVG, PNG, JPG or GIF</p>
-          </div>
-        </div>
-
+        {/* Content Input */}
         <div className="mb-4">
           <label
-            className="block text-gray-700 text-sm font-bold mb-2"
             htmlFor="content"
+            className="block text-lg font-medium text-gray-700"
           >
             Content
           </label>
-          <div className="border rounded p-2">
-            <ReactQuill
-              value={formData.content}
-              onChange={handleContentChange}
-              className="h-48 mb-10"
-            />
-          </div>
+          <ReactQuill
+            value={content}
+            onChange={setContent}
+            theme="snow"
+            className="h-48 mb-10"
+          />
         </div>
 
-        {/* File Upload Section */}
-
-        <div className="flex items-center justify-between">
+        <div className="flex justify-center mt-20">
           <button
+            disabled={isLoading}
             type="submit"
-            className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded"
-            disabled={isLoading} // Disable button while loading
+            className="px-6 py-2 bg-blue-500 text-white font-medium text-lg rounded-md hover:bg-blue-600 transition duration-300"
           >
-            {isLoading ? 'Submitting...' : 'Submit'}
+            {isLoading ? 'Updating...' : 'Update'}
           </button>
         </div>
       </form>

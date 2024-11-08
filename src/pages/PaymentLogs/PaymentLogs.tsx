@@ -13,7 +13,7 @@ const PaymentLogs = () => {
     title: '',
     content: '',
     category: '',
-    thumbnail: null,
+    image: null,
   });
 
   const [addBlog, { isLoading }] = useAddBlogMutation();
@@ -29,9 +29,10 @@ const PaymentLogs = () => {
 
   const handleFileChange = (e: any) => {
     const file = e.target.files[0];
-    setFormData({ ...formData, thumbnail: file });
+    setFormData({ ...formData, image: file });
   };
   const navigate = useNavigate();
+
   const handleSubmit = async (e: { preventDefault: () => void }) => {
     e.preventDefault();
     try {
@@ -39,12 +40,12 @@ const PaymentLogs = () => {
       formDataToSend.append('title', formData.title);
       formDataToSend.append('content', formData.content);
       formDataToSend.append('category', formData.category);
-      if (formData.thumbnail) {
-        formDataToSend.append('thumbnail', formData.thumbnail);
+      if (formData.image) {
+        formDataToSend.append('image', formData.image);
       }
 
       await addBlog({ data: formDataToSend, token }).unwrap();
-      setFormData({ title: '', content: '', category: '', thumbnail: null });
+      setFormData({ title: '', content: '', category: '', image: null });
       navigate('/dashboard/all-blogs');
       toast.success('Blog saved successfully!');
     } catch (error) {
