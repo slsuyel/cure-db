@@ -1,4 +1,4 @@
-import { useParams } from 'react-router-dom';
+import { useNavigate, useParams } from 'react-router-dom';
 import { useProfileInfoUpdateMutation } from '../../redux/api/user/userApi';
 import { useState } from 'react';
 import { toast } from 'sonner';
@@ -7,7 +7,7 @@ const UpdateUser = () => {
   const { id } = useParams();
   const token = localStorage.getItem('token');
   const [profileInfoUpdate, { isLoading }] = useProfileInfoUpdateMutation();
-
+  const navigate = useNavigate();
   const [formData, setFormData] = useState({
     total_cost: '',
     annual_cost: '',
@@ -29,6 +29,8 @@ const UpdateUser = () => {
         token,
         id,
       }).unwrap();
+
+      navigate('/dashboard/all-patients');
 
       if (res.message === 'Descriptions and image updated successfully') {
         toast.success('Descriptions and image updated successfully');

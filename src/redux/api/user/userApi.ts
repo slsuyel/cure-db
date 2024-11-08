@@ -26,6 +26,7 @@ const userApi = baseApi.injectEndpoints({
       query: () => ({
         url: '/api/users',
       }),
+      providesTags: ['user-update'],
     }),
 
     userProfile: builder.query({
@@ -79,6 +80,7 @@ const userApi = baseApi.injectEndpoints({
           authorization: `Bearer ${token}`,
         },
       }),
+      invalidatesTags: ['user-update'],
     }),
   }),
 });

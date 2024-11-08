@@ -7,7 +7,7 @@ const baseApi = createApi({
     credentials: 'include',
   }),
   endpoints: () => ({}),
-  tagTypes: ['blogs'],
+  tagTypes: ['blogs', 'user-update'],
 });
 
 export default baseApi;

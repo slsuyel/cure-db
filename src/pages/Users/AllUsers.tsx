@@ -60,7 +60,7 @@ const AllUsers = () => {
           </thead>
           <tbody className=" capitalize">
             {data.data.map((user: any) => (
-              <tr>
+              <tr key={user.id}>
                 <td className="border-b border-[#eee] py-3 px-4 dark:border-strokedark">
                   <Link
                     className="hover:underline transition mb-1"
