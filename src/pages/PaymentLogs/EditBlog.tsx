@@ -44,7 +44,7 @@ const EditBlog = () => {
   if (loading) return <Loader />;
 
   return (
-    <div className="max-w-3xl mx-auto p-6 bg-white shadow-md rounded-lg">
+    <div className="max-w-3xl mx-auto p-6  shadow-md rounded-lg">
       <h1 className="text-2xl font-bold text-center mb-4">Edit Blog</h1>
       <form onSubmit={handleSubmit}>
         {/* Title Input */}
@@ -60,7 +60,7 @@ const EditBlog = () => {
             type="text"
             value={title}
             onChange={(e) => setTitle(e.target.value)}
-            className="mt-1 block w-full p-2 border rounded-md"
+            className="mt-1 block w-full p-2 border rounded-md dark:bg-boxdark"
             placeholder="Enter blog title"
           />
         </div>
@@ -78,7 +78,7 @@ const EditBlog = () => {
             type="text"
             value={category}
             onChange={(e) => setCategory(e.target.value)}
-            className="mt-1 block w-full p-2 border rounded-md"
+            className="mt-1 block w-full p-2 border rounded-md dark:bg-boxdark"
             placeholder="Enter blog category"
           />
         </div>
