@@ -51,6 +51,9 @@ const AllUsers = () => {
                 Email
               </th>
               <th className="py-4 px-4 font-medium text-black dark:text-white">
+                Mobile
+              </th>
+              <th className="py-4 px-4 font-medium text-black dark:text-white">
                 Edit Descriptions
               </th>
               <th className="py-4 px-4 font-medium text-black dark:text-white">
@@ -64,7 +67,7 @@ const AllUsers = () => {
                 <td className="border-b border-[#eee] py-3 px-4 dark:border-strokedark">
                   <Link
                     className="hover:underline transition mb-1"
-                    to={`/dashboard/user/${user.id}`}
+                    to={`/dashboard/patient-details/${user.id}`}
                   >
                     {' '}
                     {user.fullName}
@@ -76,7 +79,7 @@ const AllUsers = () => {
                 <td className="border-b border-[#eee] py-3 px-4 dark:border-strokedark">
                   {user.email}
                 </td>
-
+                <td className="border-b border-[#eee] py-3 px-4 dark:border-strokedark"></td>
                 <td className="border-b border-[#eee] py-5 px-4 dark:border-strokedark">
                   <div className="flex items-center space-x-3.5">
                     <Link

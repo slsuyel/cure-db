@@ -31,7 +31,7 @@ const userApi = baseApi.injectEndpoints({
 
     userProfile: builder.query({
       query: ({ token, id }) => ({
-        url: `/api/admin/users/${id}`,
+        url: `/api/users/${id}`,
         headers: {
           authorization: `Bearer ${token}`,
         },
