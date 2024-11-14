@@ -91,10 +91,10 @@ const AllTransactions = () => {
           className="dark:bg-boxdark-2 px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
         >
           <option value="/api/transitions">All Transactions</option>
-          <option value="/api/transitions?withDonation=true">
+          <option value="/api/transitions?DonationType=withoutuser">
             With Patient
           </option>
-          <option value="/api/transitions?withDonation=false">
+          <option value="/api/transitions??DonationType=withuser">
             Without Patient
           </option>
         </select>
