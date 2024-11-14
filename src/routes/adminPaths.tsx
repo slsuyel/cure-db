@@ -13,6 +13,7 @@ import AllBlogs from '../pages/PaymentLogs/AllBlogs';
 import EditBlog from '../pages/PaymentLogs/EditBlog';
 import UpdateUser from '../pages/Users/UpdateUser';
 import UserDetails from '../pages/Users/UserDetails';
+import AllTransactions from '../pages/Transactions/AllTransactions';
 
 export const adminPaths = [
   {
@@ -56,11 +57,11 @@ export const adminPaths = [
     ],
   },
 
-  // {
-  //   name: 'BLogs',
-  //   path: 'blogs',
-  //   element: <PaymentLogs />,
-  // },
+  {
+    name: 'Transactions',
+    path: 'transactions',
+    element: <AllTransactions />,
+  },
 
   {
     name: 'BLogs',

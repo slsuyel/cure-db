@@ -50,6 +50,17 @@ const adminAuthApi = baseApi.injectEndpoints({
       }),
       providesTags: ['blogs'],
     }),
+    allTransactions: builder.query({
+      query: ({ data, token }) => ({
+        url: '/api/transitions',
+        method: 'GET',
+        body: data,
+        headers: {
+          authorization: `Bearer ${token}`,
+        },
+      }),
+    }),
+
     singleBlog: builder.query({
       query: ({ id, token }) => ({
         url: `/api/blogs/${id}`,
@@ -110,4 +121,5 @@ export const {
   useLogOutMutation,
   useAddBlogMutation,
   useAllBlogsQuery,
+  useAllTransactionsQuery,
 } = adminAuthApi;
