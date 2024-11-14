@@ -1,16 +1,34 @@
 import { useState } from 'react';
-import Breadcrumb from '../../components/ui/Breadcrumb';
 import { useProfileUpdateMutation } from '../../redux/api/user/userApi';
-import { useParams } from 'react-router-dom';
+import { useNavigate, useParams } from 'react-router-dom';
 import { toast } from 'sonner';
+import ReactQuill, { Quill } from 'react-quill';
+import QuillResizeImage from 'quill-resize-image';
+Quill.register('modules/resize', QuillResizeImage);
+
+const modules = {
+  toolbar: [
+    [{ header: [1, 2, 3, 4, 5, 6, false] }],
+    ['bold', 'italic', 'underline', 'strike'],
+    [{ list: 'ordered' }, { list: 'bullet' }],
+    [{ indent: '-1' }, { indent: '+1' }],
+    ['link', 'image'],
+    [{ align: [] }],
+    ['clean'],
+  ],
+  resize: {
+    modules: ['Resize', 'DisplaySize'],
+    displaySize: true,
+  },
+};
+
+import 'react-quill/dist/quill.snow.css';
 
 const UserUpdate = () => {
   const [profileUpdate, { isLoading }] = useProfileUpdateMutation();
-
   const { id } = useParams();
   const token = localStorage.getItem('token');
-
-  // Updated initial form data structure
+  const navigate = useNavigate();
   const [formData, setFormData] = useState({
     short_description: '',
     long_description: '',
@@ -23,12 +41,20 @@ const UserUpdate = () => {
     });
   };
 
+  const handleQuillChange = (value: string) => {
+    setFormData({
+      ...formData,
+      long_description: value,
+    });
+  };
+
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     try {
       const res = await profileUpdate({ data: formData, token, id }).unwrap();
       console.log(res);
       if (res.message === 'Descriptions updated successfully') {
+        navigate('/dashboard/all-patients');
         toast.success('Descriptions updated successfully');
       }
     } catch (error) {
@@ -37,7 +63,7 @@ const UserUpdate = () => {
   };
 
   return (
-    <div className=" mx-auto p-4">
+    <div className="mx-auto p-4">
       <h1 className="text-2xl font-bold mb-4">Update Patient Descriptions</h1>
       <form
         onSubmit={handleSubmit}
@@ -56,7 +82,7 @@ const UserUpdate = () => {
             value={formData.short_description}
             onChange={handleChange}
             required
-            rows={4} // Set the number of visible rows
+            rows={4}
             className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline resize-none"
           />
         </div>
@@ -67,20 +93,19 @@ const UserUpdate = () => {
           >
             Long Description:
           </label>
-          <textarea
-            id="long_description"
-            name="long_description"
+          <ReactQuill
             value={formData.long_description}
-            onChange={handleChange}
-            required
-            rows={6}
-            className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline resize-none"
+            onChange={handleQuillChange}
+            className="bg-white text-gray-700 mb-10 overflow-scroll h-[400px]"
+            theme="snow"
+            placeholder="Enter detailed description..."
+            modules={modules}
           />
         </div>
         <button
           type="submit"
           disabled={isLoading}
-          className={`bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline ${isLoading ? 'opacity-50 cursor-not-allowed' : ''}`}
+          className={`bg-blue-500 mt-8 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline ${isLoading ? 'opacity-50 cursor-not-allowed' : ''}`}
         >
           Update User
         </button>
