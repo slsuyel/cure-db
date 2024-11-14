@@ -51,8 +51,8 @@ const adminAuthApi = baseApi.injectEndpoints({
       providesTags: ['blogs'],
     }),
     allTransactions: builder.query({
-      query: ({ data, token }) => ({
-        url: '/api/transitions',
+      query: ({ data, token, api }) => ({
+        url: `${api}`,
         method: 'GET',
         body: data,
         headers: {
