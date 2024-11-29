@@ -63,8 +63,8 @@ const userApi = baseApi.injectEndpoints({
 
     profileUpdate: builder.mutation({
       query: ({ data, token, id }) => ({
-        url: `/api/users/${id}/descriptions`,
-        method: 'PUT',
+        url: `/api/users/${id}/update`,
+        method: 'POST',
         body: data,
         headers: {
           authorization: `Bearer ${token}`,
