@@ -113,8 +113,9 @@ const PaymentLogs = () => {
               <ImageUploadIcon size={24} />
             </span>
             <p>
-              <span className="text-primary">Click to upload</span>
+              <span className="text-primary">Click to upload </span>
             </p>
+            <span className=" text-danger">Image size = 3:2</span>
             <p className="mt-1.5">SVG, PNG, JPG or GIF</p>
           </div>
         </div>
@@ -142,7 +143,7 @@ const PaymentLogs = () => {
           <button
             type="submit"
             className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded"
-            disabled={isLoading} // Disable button while loading
+            disabled={isLoading}
           >
             {isLoading ? 'Submitting...' : 'Submit'}
           </button>

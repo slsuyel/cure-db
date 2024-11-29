@@ -30,7 +30,7 @@ const adminAuthApi = baseApi.injectEndpoints({
     editBlog: builder.mutation({
       query: ({ data, token, id }) => ({
         url: `/api/blogs/${id}`,
-        method: 'PUT',
+        method: 'POST',
         body: data,
         headers: {
           authorization: `Bearer ${token}`,

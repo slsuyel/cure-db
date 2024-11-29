@@ -169,7 +169,9 @@ export default function UserUpdate() {
             />
           </div>
           <div>
-            <label className="block text-gray-700">Image</label>
+            <label className="block text-gray-700">
+              Image <span className="text-sm text-danger">(440*320)</span>
+            </label>
             <input
               type="file"
               name="image"

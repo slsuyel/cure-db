@@ -8,11 +8,13 @@ import {
 } from '../../redux/api/admin/adminAuthApi';
 import { toast } from 'sonner';
 import Loader from '../../components/Loader';
+import { ImageUploadIcon } from 'hugeicons-react';
 
 const EditBlog = () => {
   const { id } = useParams();
   const token = localStorage.getItem('token');
   const [title, setTitle] = useState('');
+  const [image, setImage] = useState(null);
   const [content, setContent] = useState('');
   const [category, setCategory] = useState('');
   const [editBlog, { isLoading }] = useEditBlogMutation();
@@ -28,17 +30,37 @@ const EditBlog = () => {
     }
   }, [data]);
 
-  // Handle form submission
-  const handleSubmit = async (e: { preventDefault: () => void }) => {
+  const handleFileChange = (e: any) => {
+    const file = e.target.files[0];
+    console.log(file);
+    setImage(file);
+  };
+
+  const handleSubmit = async (e: any) => {
     e.preventDefault();
-    const data = {
-      title,
-      content,
-      category,
-    };
-    await editBlog({ data, token, id });
-    navigate('/dashboard/all-blogs');
-    toast.success('Blog updated successfully');
+    console.log(image);
+    const formData = new FormData();
+    formData.append('title', title);
+    formData.append('content', content);
+    formData.append('category', category);
+
+    if (image) {
+      formData.append('image', image);
+    }
+    try {
+      const res = await editBlog({ data: formData, token, id });
+      if (res.data) {
+        toast.success('Blog updated successfully');
+        navigate('/dashboard/all-blogs');
+      } else {
+        toast.error('Blog update failed. Please try again.');
+      }
+    } catch (error) {
+      toast.error(
+        'An error occurred while updating the blog. Please try again.',
+      );
+      console.error(error);
+    }
   };
 
   if (loading) return <Loader />;
@@ -81,6 +103,28 @@ const EditBlog = () => {
             className="mt-1 block w-full p-2 border rounded-md dark:bg-boxdark"
             placeholder="Enter blog category"
           />
+        </div>
+
+        <div
+          id="FileUpload"
+          className="w-100 relative mb-5.5 block  cursor-pointer appearance-none rounded border border-dashed border-primary bg-gray py-4 px-4 dark:bg-meta-4 sm:py-7.5"
+        >
+          <input
+            type="file"
+            accept="image/*"
+            className="absolute inset-0 z-50 m-0 h-full w-full cursor-pointer p-0 opacity-0 outline-none"
+            onChange={handleFileChange}
+          />
+          <div className="flex flex-col items-center justify-center space-y-3">
+            <span className="flex h-10 w-10 items-center justify-center rounded-full border border-stroke bg-white dark:border-strokedark dark:bg-boxdark">
+              <ImageUploadIcon size={24} />
+            </span>
+            <p>
+              <span className="text-primary">Click to upload </span>
+            </p>
+            <span className=" text-danger">Image size = 3:2</span>
+            <p className="mt-1.5">SVG, PNG, JPG or GIF</p>
+          </div>
         </div>
 
         {/* Content Input */}

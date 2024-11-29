@@ -11,47 +11,11 @@ const UserDetails = () => {
     return <Loader />;
   }
 
-  /* {
-    "id": 1,
-    "image": "user_images\/1731066412_05a38c818f04a400671e8e78210075f1d8fe5421ed564976.jpg",
-    "name": "name",
-    "mobile": "name",
-    "blood_group": "name",
-    "email": "name",
-    "gander": "Male",
-    "gardiant_phone": "n",
-    "whatsapp_number": "n",
-
-    "role": "n",
-    "role_id": 0,
-    "created_at": "2024-07-13T15:13:12.000000Z",
-    "updated_at": "2024-11-08T11:46:52.000000Z",
-    "fullName": "n",
-    "relationship": "n",
-    "diagnosedForSMA": false,
-    "symptoms": false,
-    "typeOfSMA": "n",
-    "doctorName": "n",
-    "fatherMobile": "n",
-    "motherMobile": "n",
-    "emergencyContact": "n",
-    "presentAddress": "n",
-    "permanentAddress": null,
-    "agreement": false,
-    "dateOfBirth": "2024-07-12T18:00:00.000000Z",
-    "annual_cost": "100.00",
-    "total_cost": "499.00",
-    "cost_donated": "0.00",
-    "short_description": "India and South Africa piled up the two highest totals at the Women\u2019s T20 World Cup on Wednesday to stay on track for the semi-finals.",
-    "long_description": "India and South Africa piled up the two highest totals at the Women\u2019s T20 World Cup on Wednesday to stay on track for the semi-finals.\n\nIndia and South Africa piled up the two highest totals at the Women\u2019s T20 World Cup on Wednesday to stay on track for the semi-finals.",
-    "profile_image": "https:\/\/api.curesmabangladesh.org\/protected\/image\/user_images\/1731066412_05a38c818f04a400671e8e78210075f1d8fe5421ed564976.jpg"
-} */
-
   return (
     <div className="">
       <div className="mt-4 md:mt-6 mb-20 max-container">
         <div className="w-full">
-          <div className="bg-white shadow-md rounded-lg p-6">
+          <div className="bg-white dark:bg-boxdark shadow-md rounded-lg p-6">
             <div className="">
               {/* Profile Image Section */}
 
@@ -63,13 +27,10 @@ const UserDetails = () => {
                 <div className="grid grid-cols-3 gap-6">
                   <div className="col-span-1">
                     <img
-                      src={
-                        data.profile_image ||
-                        'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcR-SnDtnoTbs_JJtNW62ALeA4gKPtpCGcQ5CnVEJNNAddxjuLwrbo1c16rExrxYL4xLmIw&usqp=CAU'
-                      }
+                      src={data.profile_image}
                       width={150}
                       alt={data.fullName}
-                      className=" h-auto rounded-lg shadow-sm"
+                      className=" h-auto rounded-lg shadow-sm object-cover"
                     />
                   </div>
 
@@ -292,7 +253,11 @@ const UserDetails = () => {
                   <p className="text-gray-600 mb-4">{data.short_description}</p>
                   <hr />
                   <p className="text-gray-600 whitespace-pre-line">
-                    {data.long_description}
+                    <div
+                      dangerouslySetInnerHTML={{
+                        __html: data.long_description,
+                      }}
+                    />
                   </p>
                 </div>
               </div>
