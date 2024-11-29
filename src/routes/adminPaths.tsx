@@ -41,6 +41,7 @@ export const adminPaths = [
         name: 'Patient Details',
         path: 'patient-details/:id',
         element: <UserDetails />,
+        sidebar: false,
       },
       {
         name: 'Update Patient',
